@@ -9,7 +9,6 @@ export default function PendingContainer({ message }: { message: string }) {
     >
       <Lottie
         options={{ animationData: LoadListLottie, loop: true, autoplay: true }}
-        style={{ marginTop: "-100px", marginBottom: "-100px" }}
         height={"500px"}
       />
       <div className="flex flex-col items-center gap-5">

@@ -10,6 +10,7 @@ export default async function root() {
   try {
     const token = Cookie.getCookie<string>(STORAGE_KEYS.TOKEN);
     if (!token) {
+      // Cookie.setCookie<string>(STORAGE_KEYS.TOKEN, "temp");
       throw new Response("사용자 정보를 불러오기 위한 access token이 존재하지 않습니다", {
         status: 404,
       });
@@ -19,7 +20,7 @@ export default async function root() {
 
     return defer(() => ({ user }));
   } catch (error) {
-    console.error(error);
+    console.error("root error", error);
     return redirect(RoutePath.Login);
   }
 }

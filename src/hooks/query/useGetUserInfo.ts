@@ -1,7 +1,6 @@
 import useAuth from "@hooks/useAuth";
 import QueryKeys from "@libraries/reactQuery/queryKeys";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
-import http from "@utils/api";
 import CustomError from "@utils/api/error";
 import { useEffect } from "react";
 
@@ -21,6 +20,7 @@ export default function useGetUserInfo() {
 
 export const userInfoQueryOptions = (token: string | null): UseQueryOptions<User> => ({
   queryKey: [QueryKeys.User, token],
-  queryFn: () => http.get(`/user?access_token=${token}`),
+  // queryFn: () => http.get(`/user?access_token=${token}`),
+  queryFn: () => Promise.resolve({ id: 1, name: "오드", age: 23 }),
   enabled: Boolean(token),
 });
