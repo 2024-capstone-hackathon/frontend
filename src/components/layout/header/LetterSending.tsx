@@ -1,15 +1,14 @@
 import { Button } from "@components/ui/button";
 import { Form, FormField, FormItem, FormControl } from "@components/ui/form";
 import { Textarea } from "@components/ui/textarea";
-import { LinkFormData } from "@hooks/mutation/useSendEcho";
-import useSendLetter from "@hooks/mutation/useSendLetter";
+import useSendLetter, { LetterFormData } from "@hooks/mutation/useSendLetter";
 import { useForm } from "react-hook-form";
 
-type SubmitMutation = (data: LinkFormData) => void;
+type SubmitMutation = (data: LetterFormData) => void;
 
 export default function LetterSending() {
   const { mutate: sendLetter } = useSendLetter();
-  const form = useForm<LinkFormData>();
+  const form = useForm<LetterFormData>();
   const { control, handleSubmit } = form;
 
   return (
@@ -34,7 +33,7 @@ export default function LetterSending() {
             </FormItem>
           )}
         />
-        <Button type="submit">업로드</Button>
+        <Button type="submit">속삭여 보내기</Button>
       </form>
     </Form>
   );

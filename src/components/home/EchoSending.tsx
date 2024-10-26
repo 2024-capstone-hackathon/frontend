@@ -4,9 +4,7 @@ import { Textarea } from "@components/ui/textarea";
 import useSendEcho, { LinkFormData } from "@hooks/mutation/useSendEcho";
 import { useForm } from "react-hook-form";
 
-type SubmitMutation = (data: LinkFormData) => void;
-
-export default function EchoSending() {
+export default function EchoSending({ letterId }: { letterId: number }) {
   const { mutate: sendEcho } = useSendEcho();
   const form = useForm<LinkFormData>();
   const { control, handleSubmit } = form;
@@ -14,12 +12,12 @@ export default function EchoSending() {
   return (
     <Form {...form}>
       <form
-        onSubmit={handleSubmit(sendEcho as SubmitMutation)}
+        onSubmit={handleSubmit(({ content }) => sendEcho({ letterId, content }))}
         className="flex flex-col gap-4 mt-10"
       >
         <FormField
           control={control}
-          name="text"
+          name="content"
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -34,7 +32,7 @@ export default function EchoSending() {
           )}
         />
         <Button type="submit" size={"lg"}>
-          업로드
+          메아리 보내기
         </Button>
       </form>
     </Form>

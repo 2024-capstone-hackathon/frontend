@@ -26,13 +26,4 @@ export default defineConfig({
   define: {
     global: {},
   },
-  server: {
-    proxy: {
-      "/api": {
-        target: "https://flow.edutrack.kr",
-        changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, "/api/v1"),
-      },
-    },
-  },
 });

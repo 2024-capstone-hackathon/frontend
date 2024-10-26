@@ -1,3 +1,6 @@
+import { Button } from "@components/ui/button";
+import { Form, FormField, FormItem, FormControl } from "@components/ui/form";
+import { Input } from "@components/ui/input";
 import { Separator } from "@components/ui/separator";
 import {
   Sheet,
@@ -7,11 +10,20 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@components/ui/sheet";
+import useSearchLetter, { SearchLetterFormData } from "@hooks/mutation/useSearchLetter";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function SearchButton() {
+  const { mutate: search, isPending } = useSearchLetter();
+  const [answer, setAnswer] = useState<string | null>(null);
+
+  const form = useForm<SearchLetterFormData>();
+  const { control, handleSubmit } = form;
+
   return (
     <Sheet>
-      <SheetTrigger className="flex flex-row items-center justify-center hover:underline hover:underline-offset-1">
+      <SheetTrigger className="flex flex-row items-center justify-center hover:underline hover:underline-offset-1 min-w-fit font-medium">
         나와 닮은 메아리 듣기
       </SheetTrigger>
       <SheetContent className="bg-[#DCD6C8] w-[600px] sm:w-[640px]">
@@ -23,7 +35,7 @@ export default function SearchButton() {
           </SheetTitle>
           <SheetDescription>
             <p className="text-detail-1 font-regular mb-3">
-              나와 비슷한 상황의 속삭임을 찾아보고,
+              나와 비슷한 상황의 속삭임을 찾아서,
               <br /> 따뜻한 메아리의 이야기를 차분히 들어보세요
             </p>
             <p className="text-detail-1 font-regular">
@@ -33,8 +45,34 @@ export default function SearchButton() {
           </SheetDescription>
         </SheetHeader>
         <Separator />
-        {/* 검색 */}
-        {/* 라디오  */}
+        <div className="w-full h-[calc(100vh-200px)] overflow-scroll pb-10">
+          {/* 검색 */}
+          <Form {...form}>
+            <form
+              onSubmit={handleSubmit(data =>
+                search(data, { onSuccess: answer => setAnswer(answer as string) }),
+              )}
+              className="flex my-10 gap-4"
+            >
+              <FormField
+                control={control}
+                name="text"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input placeholder="속삭임 찾기" {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">메아리 듣기</Button>
+            </form>
+          </Form>
+          {/* 라디오  */}
+          <p className="text-detail-1 whitespace-pre-line">
+            {isPending ? "불러오는 중..." : answer}
+          </p>
+        </div>
       </SheetContent>
     </Sheet>
   );

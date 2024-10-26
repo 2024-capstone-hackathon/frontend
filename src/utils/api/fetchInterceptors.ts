@@ -27,7 +27,6 @@ const fetchWithInterceptors = async <T>(url: string, options: FetchOptions = {})
   if (interceptors?.response) {
     return interceptors.response<T>(response);
   }
-
   return response.json() as Promise<T>;
 };
 

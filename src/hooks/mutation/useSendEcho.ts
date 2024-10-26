@@ -1,10 +1,11 @@
-import { BASE_URL } from "@constants/environments";
 import useDailyAnsweredStorage from "@hooks/storage/useDailyAnsweredStorage";
 import useUserStorage from "@hooks/storage/useUserStorage";
+import RoutePath from "@routes/routePath";
 import { useMutation } from "@tanstack/react-query";
 
 export interface LinkFormData {
-  text: string;
+  content: string;
+  letterId: number;
 }
 
 export default function useSendEcho() {
@@ -12,20 +13,12 @@ export default function useSendEcho() {
   const [, setIsAnswered] = useDailyAnsweredStorage();
 
   return useMutation({
-    mutationFn: ({ text }: LinkFormData) =>
-      // http.post("/prediction/0df93ec4-0a88-435f-ab7e-f38396cb9f4e", {
-      //   question: { title: text, datetime: "2024-04-27T10:30:00", age: user?.age ?? 30 },
-      // }),
-      fetch(`${BASE_URL}/0df93ec4-0a88-435f-ab7e-f38396cb9f4e`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title: text, datetime: new Date(), age: user?.age ?? 30 }),
-      }),
+    // mutationFn: ({ letterId, content }: LinkFormData) =>
+    // http.post("/eco", { letterId, content, datetime: new Date(), age: user?.age ?? 30 }),
+    mutationFn: ({}: LinkFormData) => Promise.resolve(),
     onSuccess: () => {
       setIsAnswered(true);
-      // window.location.href = RoutePath.Index;
+      window.location.href = RoutePath.Index;
     },
   });
 }

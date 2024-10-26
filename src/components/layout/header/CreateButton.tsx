@@ -10,13 +10,13 @@ import {
   SheetDescription,
 } from "@components/ui/sheet";
 import useLikeLetter from "@hooks/mutation/useLikeLetter";
-import useSuspenseGetLetterList from "@hooks/query/useGetLetterList";
-import { PropsWithChildren, Suspense } from "react";
+import useSuspenseGetLetterList, { Letter } from "@hooks/query/useGetLetterList";
+import { Suspense } from "react";
 
 export default function CreateButton() {
   return (
     <Sheet>
-      <SheetTrigger className="flex flex-row items-center justify-center hover:underline hover:underline-offset-1">
+      <SheetTrigger className="flex flex-row items-center justify-center hover:underline hover:underline-offset-1 min-w-fit font-medium">
         나의 속삭임 띄우기
       </SheetTrigger>
       <SheetContent className="bg-[#DCD6C8] w-[600px] sm:w-[640px]">
@@ -40,7 +40,7 @@ export default function CreateButton() {
           </SheetDescription>
         </SheetHeader>
         <Separator />
-        <Suspense>
+        <Suspense fallback="불러오는 중...">
           <div className="w-full h-[calc(100vh-280px)] overflow-scroll pb-10">
             {/* 사연 보내기 */}
             <LetterSending />
@@ -61,31 +61,25 @@ function LetterList() {
 
   return (
     <>
-      {letterList.map(({ isLiked, text, count }) => (
-        <Letter key={text} isLiked={isLiked} count={count}>
-          {text}
-        </Letter>
+      {letterList.map(letter => (
+        <LetterComponent key={letter.id} letter={letter} />
       ))}
     </>
   );
 }
 
-function Letter({
-  count,
-  isLiked,
-  children,
-}: PropsWithChildren<{ count: number; isLiked: boolean }>) {
+function LetterComponent({ letter: { id, isLiked, count, text } }: { letter: Letter }) {
   const { mutate: like } = useLikeLetter();
 
   return (
     <div className="w-full mx-auto pt-9 pb-4 border-b border-dashed border-[#8A5A5A70]">
-      <p className="mb-4 text-detail-1">{children}</p>
+      <p className="mb-4 text-detail-1">{text}</p>
       <div className="flex flex-row justify-between">
         <p className="text-detail-3 mt-3 text-red-950">
           이 속삭임의 온도는 <span className="text-rose-700">{count}</span>도
         </p>
         <Button
-          onClick={() => like()}
+          onClick={() => like(id)}
           disabled={isLiked}
           size="sm"
           variant={"ghost"}

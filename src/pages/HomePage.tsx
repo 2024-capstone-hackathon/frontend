@@ -1,5 +1,4 @@
 import EchoList from "@components/home/EchoList";
-import EchoSending from "@components/home/EchoSending";
 import TodaysLetter from "@components/home/TodaysLetter";
 import useDailyAnsweredStorage from "@hooks/storage/useDailyAnsweredStorage";
 import { colors } from "@styles/theme";
@@ -8,12 +7,10 @@ import LoadListLottie from "@assets/lottie-letter.json";
 import Lottie from "react-lottie";
 
 export default function HomePage() {
-  const [isAnswerd] = useDailyAnsweredStorage();
-
   return (
     <div className="flex flex-col justify-center items-center gap-[130px] p-[100px]">
       {/* 오늘의 속삭임(사연) */}
-      <div className={`flex flex-col items-center gap-15`}>
+      <div className={`flex flex-col items-center gap-15 overflow-visible`}>
         <div className={`flex flex-col items-center`}>
           <h3>
             {/* TODO: 툴팁으로 '속삭임' 설명 추가하기 */}
@@ -22,7 +19,6 @@ export default function HomePage() {
           <HelperText />
         </div>
         <TodaysLetter />
-        {!isAnswerd && <EchoSending />}
       </div>
       {/* 오늘의 메아리(답변) */}
       <div className={`flex flex-col h-full items-center gap-15`}>
