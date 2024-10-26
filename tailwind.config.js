@@ -18,6 +18,9 @@ const tailwindConfig = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        low: "#FFD966", // 노란색 (낮은 온도)
+        medium: "#FF9F40", // 주황색 (중간 온도)
+        high: "#FF5C5C", // 빨간색 (높은 온도)
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",

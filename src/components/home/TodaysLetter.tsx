@@ -2,7 +2,7 @@ import useSuspenseGetLetter from "@hooks/query/useGetLetter";
 import { useMemo, useState } from "react";
 
 const MAX_TEXT = 120;
-export default function Episode() {
+export default function TodaysLetter() {
   const [expanded, setExpanded] = useState(false);
 
   const { data: letter } = useSuspenseGetLetter();
@@ -16,7 +16,7 @@ export default function Episode() {
   );
 
   return (
-    <div className="relative min-w-72 max-w-[500px] p-10 mx-auto bg-[#F5EDE0] border border-[#D4A96A] text-[#4B3F3B] text-body-3 leading-relaxed text-center shadow-xl rounded-lg transform rotate-[-2deg]">
+    <div className="relative min-w-72 max-w-[500px] p-10 mx-auto bg-[#F5EDE0] border border-[#D4A96A] text-[#4B3F3B] text-body-3 leading-relaxed text-center shadow-xl transform rotate-[-2deg] grain-effect">
       <p className="text-body-3">{displayText}</p>
       {letter.text.length > MAX_TEXT && (
         <button className="text-[#8A5A5A] underline mt-3" onClick={() => setExpanded(!expanded)}>

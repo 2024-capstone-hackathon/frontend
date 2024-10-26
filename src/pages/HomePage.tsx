@@ -1,6 +1,6 @@
 import EchoList from "@components/home/EchoList";
 import EchoSending from "@components/home/EchoSending";
-import Episode from "@components/home/Episode";
+import TodaysLetter from "@components/home/TodaysLetter";
 import useDailyAnsweredStorage from "@hooks/storage/useDailyAnsweredStorage";
 import { colors } from "@styles/theme";
 import { PropsWithChildren, Suspense } from "react";
@@ -21,7 +21,7 @@ export default function HomePage() {
           </h3>
           <HelperText />
         </div>
-        <Episode />
+        <TodaysLetter />
         {!isAnswerd && <EchoSending />}
       </div>
       {/* 오늘의 메아리(답변) */}
